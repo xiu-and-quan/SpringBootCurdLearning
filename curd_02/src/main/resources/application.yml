@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:3306/jpql?characterEncoding=utf-8
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update  #如果没有这张表则创建这张表，有的话啥也不干
+    show-sql: true  #控制台显示sql
