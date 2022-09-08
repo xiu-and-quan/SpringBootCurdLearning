@@ -18,7 +18,7 @@ public class PetMoreItemVO {
 
     private String name;
 
-    private Date dateTimeModified;
+    private LocalDateTime dateTimeModified;
 
     private  Long nums;
 }

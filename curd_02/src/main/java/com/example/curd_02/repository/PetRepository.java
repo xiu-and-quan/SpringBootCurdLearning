@@ -4,6 +4,7 @@ import com.example.curd_02.entity.Animal;
 import com.example.curd_02.jopo.dto.PetDTO;
 import com.example.curd_02.jopo.dto.PetMoreItemDTO;
 import com.example.curd_02.jopo.vo.AnimalVO;
+import com.example.curd_02.jopo.vo.PetMoreVO;
 import com.example.curd_02.jopo.vo.PetVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,4 +43,8 @@ public interface PetRepository extends JpaRepository<Animal,Integer> {
             "ORDER BY id DESC"
             ,nativeQuery = true)
     Page<Animal> queryByPage(@Param("petDTO")PetDTO petDTO, Pageable page);
+
+    //用新的类接收数据，用的jpa的方法，用构造函数接收
+    @Query(value = "select new com.example.curd_02.jopo.vo.PetMoreVO(an.id,an.name,an.dateTimeModified,count(*)) from Animal an GROUP BY an.id")
+    List<PetMoreVO> findInformation();
 }
