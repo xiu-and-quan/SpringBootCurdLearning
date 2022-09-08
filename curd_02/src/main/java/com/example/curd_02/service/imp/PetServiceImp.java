@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -136,37 +137,44 @@ public class PetServiceImp implements PetService {
         /**
          * 第一种借助方法
          */
-        List<PetMoreItemDTO> listFindCount = petRepository.findCount();
-        //接收的接口类型，需要转换 转成json理由是数据库里面的日期时间是没有办法直接转成字符串或者LocalDateTime类型的 json是一种字符，就可以自由转
-        ObjectMapper objectMapper = new ObjectMapper();
-        //java8不支持localDateTime，需要注册和引入依赖
-        objectMapper.findAndRegisterModules();
-        try{
-            String resJson = objectMapper.writeValueAsString(listFindCount);
-            return objectMapper.readValue(resJson, new TypeReference<List<PetMoreItemVO>>() {
-            });
-        }catch (JsonProcessingException e){
-            log.error("查询结果格式准换失败",e);
-        }
-        //可以不往抛异常，返回值为null
-        return null;
+//        List<PetMoreItemDTO> listFindCount = petRepository.findCount();
+//        //接收的接口类型，需要转换 转成json理由是数据库里面的日期时间是没有办法直接转成字符串或者LocalDateTime类型的 json是一种字符，就可以自由转
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        //设置序列化的日期格式
+////        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+//        //java8不支持localDateTime，需要注册和引入依赖
+//        objectMapper.findAndRegisterModules();
+//        try{
+//            String resJson = objectMapper.writeValueAsString(listFindCount);
+//            List<PetMoreItemVO>  list = objectMapper.readValue(resJson, new TypeReference<List<PetMoreItemVO>>() {
+//            });
+////            List list = objectMapper.readValue(resJson, List.class);
+//            list.forEach(System.out::println);
+//            return list;
+//        }catch (JsonProcessingException e){
+//            log.error("查询结果格式准换失败",e);
+//        }
+//        //可以不往抛异常，返回值为null
+//        return null;
 
         /**
          * 第二种借助方法 GG
          */
-//        List<Map<String,Object>> listRes= petRepository.findCount();
-//        //遍历方法
-//        List<PetMoreItemVO> lists = new ArrayList<>();
-//        for (Map<String,Object> mapItem:
-//             listRes) {
-//             lists.add(PetMoreItemVO.builder()
-//                     .id((Long) mapItem.get("id"))
-//                     .name((String) mapItem.get("name"))
-//                     .dateTimeModified((Date) mapItem.get("dateTimeModified"))
-//                     .nums((Long) mapItem.get("nums")).build());
-//            System.out.println(mapItem.entrySet());
-//        }
-//        return lists;
+        List<PetMoreItemDTO> listRes= petRepository.findCount();
+        //遍历方法
+        List<PetMoreItemVO> lists = new ArrayList<>();
+        listRes.forEach(p->{
+            lists.add(
+                    PetMoreItemVO.builder()
+                            .id(p.getId())
+                            .name(p.getName())
+                            .dateTimeModified(p.getDateTimeModified())
+                            .nums(p.getNums())
+                            .build()
+            );
+        });
+        lists.forEach(System.out::println);
+        return lists;
     }
 
     @Override

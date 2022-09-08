@@ -32,7 +32,7 @@ public interface PetRepository extends JpaRepository<Animal,Integer> {
             "count(*) as nums "+
             "from animal an " +
             "group by an.id",nativeQuery = true)
-    //List<Map<String,Object>> findCount();
+//    List<Map<String,Object>> findCount();
     List<PetMoreItemDTO> findCount();
 
     //countProjection = "id",

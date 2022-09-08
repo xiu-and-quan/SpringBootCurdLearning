@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
  * 目标数据不是实体类时的处理方式：定义接口，按照命名规范提供get方法
  */
 public interface PetMoreItemDTO {
-    Integer getId();
+    Long getId();
 
     String getName();
 
     LocalDateTime getDateTimeModified();
 
-    Integer getNums();
+    Long getNums();
 }

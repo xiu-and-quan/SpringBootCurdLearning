@@ -3,6 +3,7 @@ package com.example.curd_02;
 import com.example.curd_02.entity.Animal;
 import com.example.curd_02.jopo.vo.PetMoreVO;
 import com.example.curd_02.repository.PetRepository;
+import com.example.curd_02.service.PetService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,9 @@ class Curd02ApplicationTests {
 
     @Autowired
     private PetRepository petRepository;
+
+    @Autowired
+    private PetService petService;
 
     @Test
     void findInformation() {
@@ -27,4 +31,8 @@ class Curd02ApplicationTests {
         res.forEach(System.out::println);
     }
 
+    @Test
+    void fingCount(){
+        petService.fingCount();
+    }
 }
