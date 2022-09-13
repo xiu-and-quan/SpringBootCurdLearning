@@ -156,9 +156,14 @@ public class PetServiceImp implements PetService {
 //        }
 //        //可以不往抛异常，返回值为null
 //        return null;
-
         /**
-         * 第二种借助方法 GG
+         * 关于ObjectMapper中的objectMapper.readValue
+         */
+        /**
+         * 第二种借助方法 日期类型ObjectMapper默认是时间戳格式的，需要设置一下才行
+         * 取消时间的转化格式,默认是时间戳,可以取消,同时需要设置要表现的时间格式
+         * mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
+         * mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
          */
         List<PetMoreItemDTO> listRes= petRepository.findCount();
         //遍历方法
@@ -173,7 +178,6 @@ public class PetServiceImp implements PetService {
                             .build()
             );
         });
-        lists.forEach(System.out::println);
         return lists;
     }
 
@@ -200,4 +204,6 @@ public class PetServiceImp implements PetService {
 //        return res;
     }
 }
+
+//时间处理工具类
 
